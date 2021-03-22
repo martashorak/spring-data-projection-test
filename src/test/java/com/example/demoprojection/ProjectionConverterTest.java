@@ -26,9 +26,6 @@ class ProjectionConverterTest {
     @Autowired
     ReportRepository reportRepository;
 
-    @Autowired
-    EntityManager em;
-
     @Test
     void enumConversionJpa() {
         final ReportProjection reportEntityById = reportRepository.getReportById(1L);
