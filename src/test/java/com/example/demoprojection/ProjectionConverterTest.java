@@ -1,5 +1,6 @@
 package com.example.demoprojection;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import javax.persistence.EntityManager;
 
 
 @ExtendWith(SpringExtension.class)
@@ -28,15 +27,18 @@ class ProjectionConverterTest {
 
     @Test
     void enumConversionJpa() {
-        final ReportProjection reportEntityById = reportRepository.getReportById(1L);
-        System.out.println(reportEntityById.getReportFormat());
+        final ReportProjection report = reportRepository.getReportById(1L);
+        Assertions.assertThat(report).isNotNull();
+        Assertions.assertThat(report.getReportFormat()).isEqualTo(ReportFormat.CSV);
+
     }
 
     @Test
-    void enumConversionNativeQueyrJpa() {
+    void enumConversionNativeQueryJpa() {
 
         final ReportProjection report = reportRepository.getReportByIdNativeQuery(1L);
-        System.out.println(report.getReportFormat());
+        Assertions.assertThat(report).isNotNull();
+        Assertions.assertThat(report.getReportFormat()).isEqualTo(ReportFormat.CSV);
     }
 
 }
